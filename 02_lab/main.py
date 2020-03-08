@@ -24,21 +24,14 @@ class SimpleSubstitutionCipher:
         text = list(self.content)
         alphabet = SimpleSubstitutionCipher.alphabet
         alphabet += alphabet.lower()
-        key = self.key
+        key = self.key + self.key.lower()
         if action == 'decrypt':
             text = list(self.encrypted_text)
-            key, alphabet = alphabet, key + key.lower()
-        half_length = len(alphabet) // 2
+            key, alphabet = alphabet, key
         for i in range(len(text)):
             if text[i] in alphabet:
                 index_in_alphabet = alphabet.index(text[i])
-                is_lower = False
-                if index_in_alphabet > half_length - 1:
-                    index_in_alphabet = index_in_alphabet % half_length
-                    is_lower = True
                 text[i] = key[index_in_alphabet]
-                if is_lower:
-                    text[i] = key[index_in_alphabet].lower()
         return ''.join(text)
 
     def encrypt_text(self):
