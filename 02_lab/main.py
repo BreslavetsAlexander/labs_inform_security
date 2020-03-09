@@ -8,7 +8,6 @@ class SimpleSubstitutionCipher:
         self.file_path = file_path
         self.key = self.__generate_key()
         self.content = self.encrypted_text = self.decrypted_text = None
-        print(self.key)
 
     def read_file(self):
         with open(self.file_path, 'r', encoding='utf8') as f:
@@ -18,7 +17,11 @@ class SimpleSubstitutionCipher:
         alphabet = SimpleSubstitutionCipher.alphabet
         alphabet_indexes = list(range(len(alphabet)))
         random.shuffle(alphabet_indexes)
-        return ''.join([alphabet[i] for i in alphabet_indexes])
+        key = ''.join([alphabet[i] for i in alphabet_indexes])
+        with open('./key.txt', 'w', encoding='utf8') as f:
+            for i in range(len(alphabet)):
+                f.write(f'{alphabet[i]} --> {key[i]}\n')
+        return key
 
     def __helper(self, action='encrypt'):
         text = list(self.content)
